@@ -479,17 +479,17 @@ if __name__ == "__main__":
         easygui.msgbox("an instance is already running")
         sys.exit(1)
     while True:
-        #try:
-        client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
-        dc = client.start()
-        if dc:
+        try:
+            client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
+            dc = client.start()
+            if dc:
+                break
+        except KeyboardInterrupt as KI:
+            #print(KI)
             break
-        #except KeyboardInterrupt as KI:
-        #    #print(KI)
-        #    break
-        #except Exception as e:
-        #    print(e)
-        #    # disconnected or unable to connect
-        #    # retry
-        #    del client
-        #    pass
+        except Exception as e:
+            print(e)
+            # disconnected or unable to connect
+            # retry
+            del client
+            pass
