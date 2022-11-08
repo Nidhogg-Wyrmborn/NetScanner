@@ -16,8 +16,18 @@ from win32event import CreateMutex
 from win32api import GetLastError
 from winerror import ERROR_ALREADY_EXISTS
 import struct, easygui
+import ctypes
 
-handle = CreateMutex(None, 1, "NetScanner.exe")
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+if is_admin():
+    handle = CreateMutex(None, 1, "AdminNetScanner.exe")
+else:
+    handle = CreateMutex(None, 1, "BasicNetScanner.exe")
 
 SERVER_HOST = ~hostname~
 TRANSFER_HOST = ~tname~
@@ -469,17 +479,17 @@ if __name__ == "__main__":
         easygui.msgbox("an instance is already running")
         sys.exit(1)
     while True:
-        try:
-            client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
-            dc = client.start()
-            if dc:
-                break
-        except KeyboardInterrupt as KI:
-            #print(KI)
+        #try:
+        client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
+        dc = client.start()
+        if dc:
             break
-        except Exception as e:
-            #print(e)
-            # disconnected or unable to connect
-            # retry
-            del client
-            pass
+        #except KeyboardInterrupt as KI:
+        #    #print(KI)
+        #    break
+        #except Exception as e:
+        #    print(e)
+        #    # disconnected or unable to connect
+        #    # retry
+        #    del client
+        #    pass
